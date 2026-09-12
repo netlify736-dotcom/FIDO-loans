@@ -158,8 +158,7 @@ export default function LoanApplicationForm() {
               </label>
 
               <label className="field">
-                <sonly Mtn Phone number</span>
-                <div className="input-wrap"><Phone aria-hidden="true" /><input type="tel" name="phone-number" autoComplete="tel" inputMode="tel" placeholder="e.g. 0772123456" pattern="(?:\+256|0)[0-9]{9}" title="Enter a valid Uganda phone number, such as 0772123456" required /></div>
+                 <span>Only Mtn Phone number</span><div className="input-wrap"><Phone aria-hidden="true" /><input type="tel" name="phone-number" autoComplete="tel" inputMode="tel" placeholder="e.g. 0772123456" pattern="(?:\+256|0)[0-9]{9}" title="Enter a valid Uganda phone number, such as 0772123456" required /></div>
               </label>
 
               <label className="field">
