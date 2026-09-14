@@ -127,6 +127,7 @@ export default function LoanApplicationForm() {
   if (status === 'success') {
     return <ConfirmationStep onRestart={() => setStatus('idle')} />
 }
+  
   return (
     <main className="application-shell">
       <aside className="brand-panel">
