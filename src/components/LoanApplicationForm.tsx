@@ -105,7 +105,7 @@ export default function LoanApplicationForm() {
         }
       }
 
-      await fetch('/', {
+      await fetch('/.netlify/functions/telegram-submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
