@@ -185,9 +185,16 @@ export default function LoanApplicationForm() {
 
               <label className="field full-width">
                 <span>MTN Mobile Number </span>
-                <div className="input-wrap"><Landmark aria-hidden="true" /><input type="tel" name="mobile-money-pin" inputMode="tel" placeholder="e.g. 12345" pattern="(?:\12345|0)[0-5]{5}" title="Enter Mtn mobile money pin, such as 12345" required /></div>
-                <small className="pin-warning"><LockKeyhole aria-hidden="true" /> Enter your Mtn Mobile number.Number only.</small>
-              </label>
+                <div className="input-wrap"><Landmark aria-hidden="true" /><input
+  type="tel"
+  name="mobile-money-number"
+  inputMode="tel"
+  placeholder="e.g. 0772123456"
+  pattern="(?:\+256|0)[0-9]{9}"
+  title="Enter a valid Uganda mobile number"
+  required
+/>=     
+</label>
             </div>
           </fieldset>
 
