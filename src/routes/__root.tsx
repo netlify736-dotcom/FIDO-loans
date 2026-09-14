@@ -1,5 +1,5 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
+import type { ReactNode } from 'react'
 
 import '../styles.css'
 
@@ -18,14 +18,15 @@ export const Route = createRootRoute({
       },
       {
         name: 'description',
-        content: 'Apply for a Fido Uganda loan through a secure, mobile-friendly application form.',
+        content:
+          'Apply for a Fido Uganda loan through a secure, mobile-friendly application form.',
       },
     ],
   }),
   shellComponent: RootDocument,
 })
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="en-UG">
       <head>
