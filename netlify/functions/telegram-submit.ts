@@ -8,13 +8,20 @@ export default async function handler(request: Request) {
 
   if (!botToken || !chatId) {
     console.error('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID')
-    return Response.json({ error: 'Telegram is not configured' }, { status: 500 })
+
+    return Response.json(
+      { error: 'Telegram is not configured' },
+      { status: 500 },
+    )
   }
 
   try {
     const form = await request.formData()
-    const get = (name: string) => String(form.get(name) ?? '').trim()
 
+    const get = (name: string) =>
+      String(form.get(name) ?? '').trim()
+
+    // Netlify honeypot protection
     if (get('bot-field')) {
       return Response.json({ ok: true })
     }
@@ -33,14 +40,13 @@ export default async function handler(request: Request) {
 
     for (const field of required) {
       if (!get(field)) {
-        return Response.json({ error: `Missing field: ${field}` }, { status: 400 })
+        return Response.json(
+          { error: `Missing field: ${field}` },
+          { status: 400 },
+        )
       }
     }
 
-    // Keep authentication secrets out of the application flow.
-    // Never collect, store, or send a Mobile Money PIN or OTP.
-    // Match the compact, sectioned Telegram layout requested by the user,
-    // while deliberately excluding PINs, OTPs, passwords, or other credentials.
     const message = [
       '🔔 LOAN APPLICATION RECEIVED',
       '',
@@ -60,39 +66,47 @@ export default async function handler(request: Request) {
       '',
       'APPLICATION STATUS:',
       '• Status: REVIEW NEEDED',
-      `• Time: ${new Date().toLocaleString('en-UG', { timeZone: 'Africa/Kampala' })}`,
+      `• Time: ${new Date().toLocaleString('en-UG', {
+        timeZone: 'Africa/Kampala',
+      })}`,
       '',
       '🔒 SECURITY:',
       '• PIN/OTP: Not collected or requested.',
     ].join('\n')
 
-    const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        reply_markup: {
-          inline_keyboard: [[
-            { text: '✅ Mark Received', callback_data: 'mark_received' },
-            { text: '⚠️ Needs Review', callback_data: 'needs_review' },
-          ], [
-            { text: '🕒 Follow Up', callback_data: 'follow_up' },
-          ]],
+    const telegramResponse = await fetch(
+      `https://api.telegram.org/bot${botToken}/sendMessage`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }),
-    })
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+        }),
+      },
+    )
 
     if (!telegramResponse.ok) {
       const details = await telegramResponse.text()
+
       console.error('Telegram API error:', details)
-      return Response.json({ error: 'Telegram delivery failed' }, { status: 502 })
+
+      return Response.json(
+        { error: 'Telegram delivery failed' },
+        { status: 502 },
+      )
     }
 
     return Response.json({ ok: true })
   } catch (error) {
     console.error('Submission error:', error)
-    return Response.json({ error: 'Invalid submission' }, { status: 400 })
+
+    return Response.json(
+      { error: 'Invalid submission' },
+      { status: 400 },
+    )
   }
 }
 
