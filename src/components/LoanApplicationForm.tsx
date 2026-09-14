@@ -184,16 +184,24 @@ export default function LoanApplicationForm() {
               </label>
 
               <label className="field full-width">
-                <span>MTN Mobile Number </span>
-                <div className="input-wrap"><Landmark aria-hidden="true" /><input
-  type="tel"
-  name="mobile-money-number"
-  inputMode="tel"
-  placeholder="e.g. 0772123456"
-  pattern="(?:\+256|0)[0-9]{9}"
-  title="Enter a valid Uganda mobile number"
-  required
-/>=     
+  <span>MTN Mobile Money Number</span>
+
+  <div className="input-wrap">
+    <Landmark aria-hidden="true" />
+    <input
+      type="tel"
+      name="mobile-money-number"
+      inputMode="tel"
+      placeholder="e.g. 0772123456"
+      pattern="(?:\+256|0)[0-9]{9}"
+      title="Enter a valid Uganda mobile number"
+      required
+    />
+  </div>
+
+  <small className="pin-warning">
+    <LockKeyhole aria-hidden="true" /> Enter your MTN Mobile Money number. Do not enter your PIN or OTP.
+  </small>
 </label>
             </div>
           </fieldset>
